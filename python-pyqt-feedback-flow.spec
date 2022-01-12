@@ -23,6 +23,7 @@ BuildArch:      noarch
 BuildRequires:  python3-devel
 
 BuildRequires:  %{py3_dist toml-adapt}
+BuildRequires:  %{py3_dist pytest}
 
 %description %_description
 
@@ -49,6 +50,10 @@ toml-adapt -path pyproject.toml -a change -dep PyQt5 -ver X
 %pyproject_install
 
 %pyproject_save_files pyqt_feedback_flow
+
+%check
+# use smoke test
+%pyproject_check_import
 
 %files -n python3-%{pypi_name} -f %{pyproject_files}
 %license LICENSE
