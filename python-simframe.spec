@@ -22,7 +22,9 @@ Release:        1%{?dist}
 Summary:        Python framework for setting up and running scientific simulations
 License:        BSD
 URL:            https://github.com/stammler/%{pypi_name}
-Source0:        %{pypi_source}
+Source0:        %{pypi_source %{pypi_name}}
+
+# https://github.com/stammler/simframe/pull/2
 Patch0:         0001-Do-not-package-tests.patch
 
 BuildArch:      noarch
@@ -33,14 +35,8 @@ BuildRequires:  python3-devel
 BuildRequires:  make
 BuildRequires:  python3-sphinx-latex
 BuildRequires:  latexmk
-BuildRequires:  %{py3_dist sphinx}
-BuildRequires:  %{py3_dist sphinx-rtd-theme}
-BuildRequires:  %{py3_dist recommonmark}
-BuildRequires:  %{py3_dist numpydoc}
-BuildRequires:  %{py3_dist nbconvert}
-BuildRequires:  %{py3_dist ipykernel}
-BuildRequires:  %{py3_dist jupyter-core}
 %endif
+
 
 %if %{with tests}
 BuildRequires:  %{py3_dist pytest}
@@ -63,8 +59,11 @@ Summary:        Documentation and examples for %{name}
 %autosetup -p1 -n %{pypi_name}-%{version}
 rm -rf %{pypi_name}.egg-info
 
+# fix file permissions
+find . -type f -perm /0111 -exec chmod -v a-x '{}' '+'
+
 %generate_buildrequires
-%pyproject_buildrequires -r
+%pyproject_buildrequires -r %{?with_doc:docs/requirements.txt}
 
 %build
 %pyproject_wheel
@@ -88,6 +87,7 @@ rm -rf %{pypi_name}.egg-info
 
 %files doc
 %doc README.md
+%license LICENSE
 %if %{with doc_pdf}
 %doc docs/_build/latex/%{pypi_name}.pdf
 %endif
