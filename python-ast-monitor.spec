@@ -22,11 +22,8 @@ Version:        0.1.2
 Release:        1%{?dist}
 Summary:        AST-Monitor is a wearable Raspberry Pi computer for cyclists
 
-# License breakdown
 License:        MIT
-# img used in documentation/README is licensed by
-# Creative Commons Attribution-ShareAlike 4.0 International License.
-# https://github.com/firefly-cpp/AST-Monitor/tree/main/.github/img
+# if docs enabled, then use MIT and CC-BY-SA
 
 URL:            https://github.com/firefly-cpp/%{pretty_name}
 Source0:        %{url}/archive/%{version}/%{pretty_name}-%{version}.tar.gz
@@ -40,7 +37,9 @@ Summary:        %{summary}
 
 BuildRequires:  python3-devel
 BuildRequires:  %{py3_dist toml-adapt}
-BuildRequires:  %{py3_dist openant}
+
+# optional dependency
+Recommends:     python3dist(openant)
 
 %if %{with tests}
 BuildRequires:  %{py3_dist pytest}
@@ -56,8 +55,6 @@ BuildRequires:  make
 BuildRequires:  python3-sphinx-latex
 BuildRequires:  latexmk
 BuildRequires:  %{py3_dist sphinx}
-BuildRequires:  %{py3_dist sphinx-rtd-theme}
-BuildRequires:  %{py3_dist sphinxcontrib-bibtex}
 %endif
 
 %description doc
@@ -66,6 +63,7 @@ Documentation for %{name}.
 %prep
 %autosetup -n %{pretty_name}-%{version}
 rm -fv poetry.lock
+rm -rvf examples/.vscode
 
 # Make deps consistent with Fedora deps
 toml-adapt -path pyproject.toml -a change -dep ALL -ver X
