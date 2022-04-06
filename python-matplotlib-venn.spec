@@ -11,7 +11,7 @@ venn3_circles.}
 Name:           python-%{pypi_name}
 Version:        0.11.7
 Release:        1%{?dist}
-Summary:        Routines for plotting area-weighted two- and three-circle venn diagrams.
+Summary:        Routines for plotting area-weighted two- and three-circle venn diagrams
 
 License:        MIT
 URL:            https://github.com/konstantint/%{pypi_name}
@@ -35,10 +35,9 @@ BuildRequires:  python3dist(pytest)
 
 %prep
 %autosetup -n %{pypi_name}-%{version}
-rm -rf %{pypi_name}.egg-info
 
 %generate_buildrequires
-%pyproject_buildrequires -r
+%pyproject_buildrequires
 
 %build
 %pyproject_wheel
@@ -53,9 +52,8 @@ rm -rf %{pypi_name}.egg-info
 %endif
 
 %files -n python3-matplotlib-venn -f %{pyproject_files}
-%license LICENSE
 %doc README.rst DEVELOPER-README.rst CHANGELOG.txt
 
 %changelog
-* Wed Apr 6 2021 Iztok Fister Jr. <iztokf AT fedoraproject DOT org> - 0.11.7-1
+* Wed Apr 6 2022 Iztok Fister Jr. <iztokf AT fedoraproject DOT org> - 0.11.7-1
 - Initial package
