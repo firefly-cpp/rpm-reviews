@@ -21,11 +21,11 @@ solved using the nature-inspired algorithms that come from the related
 framework called NiaPy.}
 
 Name:           python-%{pypi_name}
-Version:        0.1.5
+Version:        0.1.6
 Release:        1%{?dist}
 Summary:        A minimalistic framework for numerical association rule mining
 
-License:        MIT and CC-BY-SA
+License:        MIT
 
 URL:            https://github.com/firefly-cpp/%{pretty_name}
 Source0:        %{url}/archive/%{version}/%{pretty_name}-%{version}.tar.gz
@@ -53,9 +53,6 @@ Summary:        %{summary}
 BuildRequires:  make
 BuildRequires:  python3-sphinx-latex
 BuildRequires:  latexmk
-BuildRequires:  %{py3_dist sphinx}
-BuildRequires:  %{py3_dist sphinx-rtd-theme}
-BuildRequires:  %{py3_dist sphinxcontrib-bibtex}
 %endif
 
 %description doc
@@ -69,7 +66,7 @@ rm -fv poetry.lock
 toml-adapt -path pyproject.toml -a change -dep ALL -ver X
 
 %generate_buildrequires
-%pyproject_buildrequires -r
+%pyproject_buildrequires %{?with_doc_pdf:-x docs}
 
 %build
 %pyproject_wheel
@@ -103,5 +100,8 @@ toml-adapt -path pyproject.toml -a change -dep ALL -ver X
 %doc CODE_OF_CONDUCT.md CONTRIBUTING.md
 
 %changelog
-* Sun Apr 10 2022 Iztok Fister Jr. <iztokf AT fedoraproject DOT org> - 0.1.5
+* Sun May 1 2022 Iztok Fister Jr. <iztokf AT fedoraproject DOT org> - 0.1.6-1
+- Upgrade to 0.1.6
+
+* Sun Apr 10 2022 Iztok Fister Jr. <iztokf AT fedoraproject DOT org> - 0.1.5-1
 - Initial package
