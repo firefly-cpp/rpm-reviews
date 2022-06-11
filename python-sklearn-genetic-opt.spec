@@ -9,8 +9,7 @@
 #
 # We can generate PDF documentation as a substitute.
 
-# do not build docs for now
-%bcond_with doc_pdf
+%bcond_without doc_pdf
 
 %global pypi_name sklearn-genetic-opt
 %global orig_name Sklearn-genetic-opt
@@ -50,9 +49,6 @@ BuildRequires:  python3-devel
 BuildRequires:  %{py3_dist pandas}
 BuildRequires:  %{py3_dist matplotlib}
 
-#it is in extras but it is recommended to have it installed
-BuildRequires:  %{py3_dist seaborn}
-
 %if %{with tests}
 BuildRequires:  python3dist(pytest)
 %endif
@@ -67,6 +63,7 @@ BuildRequires:  make
 BuildRequires:  python3-sphinx-latex
 BuildRequires:  latexmk
 BuildRequires:  ImageMagick
+BuildRequires:  pandoc
 BuildRequires:  %{py3_dist sphinx}
 BuildRequires:  %{py3_dist sphinx-rtd-theme}
 BuildRequires:  %{py3_dist sphinxcontrib-bibtex}
@@ -83,7 +80,8 @@ Documentation for %{name}.
 %autosetup -p1 -n %{orig_name}-%{version}
 
 %generate_buildrequires
-%pyproject_buildrequires
+# Cannot package “mlflow” or “all” extras due to missing mlflow dependency
+%pyproject_buildrequires -x seaborn
 
 %build
 %pyproject_wheel
@@ -104,7 +102,7 @@ sed -i 's/{progress_bar}.gif/{progress_bar-0}.png/g' docs/_build/latex/sklearnge
 %check
 # 4/117 tests are failing
 %if %{with tests}
-%pytest -k 'not test_callbacks'
+%pytest -k 'not test_tensorboard_callback'
 %endif
 
 %files -n python3-sklearn-genetic-opt -f %{pyproject_files}
