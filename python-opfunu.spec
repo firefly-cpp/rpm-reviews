@@ -8,8 +8,6 @@ Current information can always be found from the repository - https://github.com
 
 %bcond_without tests
 
-%global debug_package %{nil}
-
 %global forgeurl https://github.com/thieu1995/opfunu
 
 Name:           python-opfunu
@@ -17,13 +15,14 @@ Version:        1.0.0
 Release:        %autorelease
 Summary:        Benchmark functions for numerical optimization problems
 
-%global tag %{version}
 %forgemeta
 
 License:        GPL-3.0
 URL:            https://github.com/thieu1995/opfunu
 Source0:        %forgesource
-Patch0:         0001-do-not-package-tests-examples.patch
+Patch:          0001-do-not-package-tests-examples.patch
+
+BuildArch:      noarch
 
 %description
 %{desc}
@@ -44,11 +43,12 @@ BuildRequires:  %{py3_dist sphinx}
 BuildRequires:  %{py3_dist sphinx-rtd-theme}
 %endif
 
-# scipy and requests are missing in setup file
-BuildRequires: %{py3_dist numpy}
+# scipy, Pillow and requests are missing in setup file
 BuildRequires: %{py3_dist scipy}
-BuildRequires: %{py3_dist pandas}
-BuildRequires: %{py3_dist requests}
+BuildRequires: %{py3_dist Pillow}
+Requires:      %{py3_dist Pillow}
+Requires:      %{py3_dist requests}
+BuildRequires:  hardlink
 
 %description -n python3-opfunu
 %{desc}
@@ -62,6 +62,15 @@ Documentation for %{name}.
 
 %prep
 %forgeautosetup -p1
+
+# Adjust shebangs and executable permissions
+# https://github.com/thieu1995/opfunu/pull/9
+find examples -type f -name '*.py' ! -name '__init__.py' \
+    -execdir chmod +x '{}' '+'
+find opfunu tests -type f -name '*.py' \
+    -execdir sed -r -i '1{/^#!/d}' '{}' '+'
+
+%py3_shebang_fix examples
 
 %generate_buildrequires
 %pyproject_buildrequires -r
@@ -77,6 +86,8 @@ Documentation for %{name}.
 %install
 %pyproject_install
 %pyproject_save_files opfunu
+
+hardlink '%{buildroot}%{python3_sitelib}/opfunu'
 
 %check
 
