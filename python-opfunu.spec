@@ -30,6 +30,7 @@ BuildArch:      noarch
 %package -n python3-opfunu
 Summary:        %{summary}
 BuildRequires:      python3-devel
+BuildRequires:      %{py3_dist requests}
 
 %if %{with tests}
 BuildRequires:      %{py3_dist pytest}
@@ -43,10 +44,12 @@ BuildRequires:  %{py3_dist sphinx}
 BuildRequires:  %{py3_dist sphinx-rtd-theme}
 %endif
 
-# scipy, Pillow and requests are missing in setup file
+# scipy, Pillow, requests and pandas are missing in setup file
 BuildRequires: %{py3_dist scipy}
 BuildRequires: %{py3_dist Pillow}
+BuildRequires: %{py3_dist pandas}
 Requires:      %{py3_dist Pillow}
+Requires:      %{py3_dist pandas}
 Requires:      %{py3_dist requests}
 BuildRequires:  hardlink
 
