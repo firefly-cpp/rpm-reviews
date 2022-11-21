@@ -45,12 +45,14 @@ BuildRequires:  %{py3_dist sphinx-rtd-theme}
 %description -n python3-opytimark
 %{desc}
 
+%if %{with docs}
 %package doc
 BuildArch:      noarch
 Summary:        %{summary}
 
 %description doc
 Documentation for %{name}.
+%endif
 
 %prep
 %forgeautosetup
