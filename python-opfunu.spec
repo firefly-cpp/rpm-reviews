@@ -17,9 +17,13 @@ Summary:        Benchmark functions for numerical optimization problems
 
 %forgemeta
 
-License:        GPL-3.0
+License:        GPL-3.0-only
 URL:            https://github.com/thieu1995/opfunu
 Source0:        %forgesource
+
+# This patch is intended not to package tests.
+# It was not submitted to the upstream since this is optional
+# for the upstream to apply this.
 Patch:          0001-do-not-package-tests-examples.patch
 
 BuildArch:      noarch
@@ -51,6 +55,7 @@ BuildRequires: %{py3_dist pandas}
 Requires:      %{py3_dist Pillow}
 Requires:      %{py3_dist pandas}
 Requires:      %{py3_dist requests}
+Requires:      %{py3_dist scipy}
 BuildRequires:  hardlink
 
 %description -n python3-opfunu
