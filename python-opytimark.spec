@@ -16,7 +16,7 @@ Summary:        Python implementation of Optimization Benchmarking Functions
 
 %forgemeta
 
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            https://github.com/gugarosa/opytimark
 Source0:        %forgesource
 
@@ -33,6 +33,7 @@ BuildRequires:      python3-devel
 BuildRequires:      %{py3_dist pytest}
 %endif
 
+# sphinx-autoapi is missing
 %if %{with docs}
 BuildRequires:  make
 BuildRequires:  python3-sphinx-latex
@@ -79,10 +80,10 @@ Documentation for %{name}.
 %files -n python3-opytimark -f %{pyproject_files}
 %doc README.md
 
+%if %{with docs}
 %files doc
 %license LICENSE
 %doc CODE_OF_CONDUCT.md
-%if %{with docs}
 %doc docs/_build/latex/opytimark.pdf
 %endif
 
