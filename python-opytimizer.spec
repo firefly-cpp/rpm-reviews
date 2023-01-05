@@ -25,6 +25,10 @@ BuildArch:      noarch
 # PR: https://github.com/gugarosa/opytimizer/pull/33
 Patch:          33.patch
 
+# Move development dependencies out from the main dependencies
+# PR: https://github.com/gugarosa/opytimizer/pull/34
+Patch:          34.patch
+
 %description
 %{desc}
 
@@ -65,7 +69,7 @@ Documentation for %{name}.
 %forgeautosetup -p1
 
 %generate_buildrequires
-%pyproject_buildrequires -r
+%pyproject_buildrequires
 
 %build
 %pyproject_wheel
@@ -83,7 +87,7 @@ Documentation for %{name}.
 
 # despite the use of xvfb, several plots are shown
 %if %{with tests}
-xvfb-run -a python3 -m pytest -k 'not plot'
+xvfb-run -a %{python3} -m pytest -k 'not plot'
 %endif
 
 %files -n python3-opytimizer -f %{pyproject_files}
