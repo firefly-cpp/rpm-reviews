@@ -1,11 +1,8 @@
 %bcond_without check
 
 %global packname gpx
+%global rlibdir  %{_libdir}/R/library
 %global ver 1.1.0
-
-%global _description %{expand:
-Process open standard GPX files into data.frames
-for further use and analysis in R.}
 
 Name:             R-%{packname}
 Version:          %{ver}
@@ -24,7 +21,10 @@ BuildRequires:    R-testthat
 
 BuildArch:        noarch
 
-%description %_description
+%description
+Process open standard GPX files into data.frames
+for further use and analysis in R. Github repository:
+https://github.com/bmewing/gpx
 
 %prep
 %setup -q -c -n %{packname}
@@ -32,10 +32,10 @@ BuildArch:        noarch
 %build
 
 %install
-mkdir -p %{buildroot}%{_datadir}/R/library
-%{_bindir}/R CMD INSTALL -l %{buildroot}%{_datadir}/R/library %{packname}
+mkdir -p %{buildroot}%{rlibdir}
+%{_bindir}/R CMD INSTALL -l %{buildroot}%{rlibdir} %{packname}
 test -d %{packname}/src && (cd %{packname}/src; rm -f *.o *.so)
-rm -rf %{buildroot}%{_datadir}/R/library/R.css
+rm -f %{buildroot}%{rlibdir}/R.css
 
 %check
 %if %{with check}
@@ -44,16 +44,16 @@ export LANG=C.UTF-8
 %endif
 
 %files
-%dir %{_datadir}/R/library/%{packname}
-%doc %{_datadir}/R/library/%{packname}/html
-%doc %{_datadir}/R/library/%{packname}/NEWS.md
-%license %{_datadir}/R/library/%{packname}/LICENSE
-%{_datadir}/R/library/%{packname}/DESCRIPTION
-%{_datadir}/R/library/%{packname}/INDEX
-%{_datadir}/R/library/%{packname}/NAMESPACE
-%{_datadir}/R/library/%{packname}/Meta
-%{_datadir}/R/library/%{packname}/R
-%{_datadir}/R/library/%{packname}/help
+%dir %{rlibdir}/%{packname}
+%doc %{rlibdir}/%{packname}/html
+%license %{rlibdir}/%{packname}/LICENSE
+%{rlibdir}/%{packname}/DESCRIPTION
+%doc %{rlibdir}/%{packname}/NEWS.md
+%{rlibdir}/%{packname}/INDEX
+%{rlibdir}/%{packname}/NAMESPACE
+%{rlibdir}/%{packname}/Meta
+%{rlibdir}/%{packname}/R
+%{rlibdir}/%{packname}/help
 
 %changelog
 * Fri Mar 17 2023 Iztok Fister Jr. <iztokf AT fedoraproject DOT org> - 1.1.0-1
