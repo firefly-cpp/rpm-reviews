@@ -1,19 +1,18 @@
 %bcond_without check
 
 %global packname gpx
-%global rlibdir  %{_libdir}/R/library
+%global rlibdir  %{_datadir}/R/library
 %global ver 1.1.0
 
 Name:             R-%{packname}
 Version:          %{ver}
 Release:          1%{?dist}
-Source0:          ftp://cran.r-project.org/pub/R/contrib/main/%{packname}_%{ver}.tar.gz
 License:          MIT
-URL:              https://cran.r-project.org/web/packages/gpx/index.html
-Summary:          Process GPX files
+URL:              https://CRAN.R-project.org/package=%{packname}
+Source:           %{url}&version=%{version}#/%{packname}_%{ver}.tar.gz
+Summary:          Process GPX Files into R Data Structures
 
 BuildRequires:    R-devel, tex(latex), R-xml2, R-lubridate, R-rvest
-Requires:         R-core
 
 %if %{with check}
 BuildRequires:    R-testthat
@@ -23,8 +22,7 @@ BuildArch:        noarch
 
 %description
 Process open standard GPX files into data.frames
-for further use and analysis in R. Github repository:
-https://github.com/bmewing/gpx
+for further use and analysis in R.
 
 %prep
 %setup -q -c -n %{packname}
