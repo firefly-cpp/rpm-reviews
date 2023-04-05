@@ -7,7 +7,7 @@
 Name:             R-%{packname}
 Version:          1.0.1.1
 Release:          1%{?dist}
-License:          GPLv3+
+License:          GPL-2.0-or-later
 URL:              https://CRAN.R-project.org/package=%{packname}
 Source:           %{url}&version=%{ver}#/%{packname}_%{ver}.tar.gz
 Summary:          Data Preprocessing, Discretization for Classification
