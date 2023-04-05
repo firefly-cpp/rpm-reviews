@@ -7,22 +7,19 @@
 Name:             R-%{packname}
 Version:          1.0.1.1
 Release:          1%{?dist}
-License:          GPL
+License:          GPLv3+
 URL:              https://CRAN.R-project.org/package=%{packname}
-Source:           %{url}&version=%{version}#/%{packname}_%{ver}.tar.gz
+Source:           %{url}&version=%{ver}#/%{packname}_%{ver}.tar.gz
 Summary:          Data Preprocessing, Discretization for Classification
 
 BuildRequires:    R-devel, tex(latex)
-
-%if %{with check}
-BuildRequires:    R-testthat
-%endif
 
 BuildArch:        noarch
 
 %description
 A collection of supervised discretization algorithms. It can also
-be grouped in terms of top-down or bottom-up, implementing the discretization algorithms.
+be grouped in terms of top-down or bottom-up, implementing
+the discretization algorithms.
 
 %prep
 %setup -q -c -n %{packname}
