@@ -14,7 +14,7 @@ the configuration, management, collection, and preprocessing of data collected
 via POST requests. }
 
 Name:           python-%{pypi_name}
-Version:        0.2.1
+Version:        0.2.2
 Release:        1%{?dist}
 Summary:        Collect POST requests
 
@@ -26,9 +26,8 @@ BuildArch:      noarch
 
 BuildRequires:  python3-devel
 
-BuildRequires:  %{py3_dist toml-adapt}
-BuildRequires:  %{py3_dist pytest}
-BuildRequires:  %{py3_dist mock}
+BuildRequires:  python3-toml-adapt
+BuildRequires:  python3-pytest
 
 
 %description %_description
@@ -68,5 +67,8 @@ toml-adapt -path pyproject.toml -a change -dep pandas -ver X
 %doc README.md CHANGELOG.md CODE_OF_CONDUCT.md
 
 %changelog
+* Mon Jun 5 2023 Iztok Fister Jr. <iztokf AT fedoraproject DOT org> - 0.2.2-1
+- Update to 0.2.2
+
 * Fri Jun 2 2023 Iztok Fister Jr. <iztokf AT fedoraproject DOT org> - 0.2.1-1
 - Initial package
