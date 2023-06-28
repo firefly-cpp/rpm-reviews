@@ -46,10 +46,10 @@ Summary:        Documentation and examples for %{name}
 
 %if %{with doc_pdf}
 BuildRequires:  make
-BuildRequires:  python3dist(sphinx)
-BuildRequires:  python3dist(sphinx-rtd-theme)
-#BuildRequires:  python3dist(sphinx-latex)
-BuildRequires:  python3dist(recommonmark)
+BuildRequires:  python3-sphinx
+BuildRequires:  python3-sphinx_rtd_theme
+BuildRequires:  python3-sphinx-latex
+BuildRequires:  python3-recommonmark
 BuildRequires:  latexmk
 BuildRequires:  tex-xetex-bin
 %endif
@@ -70,7 +70,7 @@ https://belval.github.io/pdf2image/
 %pyproject_wheel
 
 %if %{with doc_pdf}
-PYTHONPATH="${PWD}" %make_build -C docs latex SPHINXOPTS='%{?_smp_mflags}'
+PYTHONPATH="${PWD}" %make_build -C docs latex SPHINXOPTS='-j%{?_smp_build_ncpus}'
 %make_build -C docs/_build/latex LATEXMKOPTS='-quiet -f'
 %endif
 
