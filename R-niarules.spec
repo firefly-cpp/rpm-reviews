@@ -13,6 +13,8 @@ Source:           %{url}&version=%{version}#/%{packname}_%{ver}.tar.gz
 Summary:          Numerical Association Rule Mining using Nature-Inspired Algorithms
 
 BuildRequires:    R-devel, tex(latex)
+BuildRequires:    tex(inconsolata.sty)
+Requires:         R-core
 
 %if %{with check}
 BuildRequires:    R-testthat
